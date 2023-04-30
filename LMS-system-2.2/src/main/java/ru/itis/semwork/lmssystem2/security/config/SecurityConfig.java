@@ -40,18 +40,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // USER endpoints
                 .antMatchers(HttpMethod.GET, "/api/v1/user").hasAnyAuthority("ADMIN", "TEACHER", "STUDENT")
                 .antMatchers(HttpMethod.GET, "/api/v1/user/{id}").hasAnyAuthority("ADMIN", "TEACHER", "STUDENT")
-                .antMatchers(HttpMethod.PUT, "/api/v1/user/{id}").hasAnyAuthority("ADMIN", "STUDENT")
-                .antMatchers(HttpMethod.DELETE, "/api/v1/user/{id}").hasAnyAuthority("ADMIN")
+                .antMatchers(HttpMethod.PUT, "/api/v1/user/{id}").hasAnyAuthority("ADMIN", "TEACHER", "STUDENT")
+                .antMatchers(HttpMethod.DELETE, "/api/v1/user/{id}").hasAnyAuthority("ADMIN", "TEACHER", "STUDENT")
                 .antMatchers(HttpMethod.POST, "/api/v1/user/{user-id}/lesson/{lesson-id}").hasAnyAuthority("ADMIN", "STUDENT", "TEACHER")
                 .antMatchers(HttpMethod.DELETE, "/api/v1/user/{user-id}/lesson/{lesson-id}").hasAnyAuthority("ADMIN", "STUDENT", "TEACHER")
                 // LESSON endpoints
-                .antMatchers(HttpMethod.PUT,"/api/v1/lesson/{id}").hasAnyAuthority("ADMIN", "TEACHER")
+                .antMatchers(HttpMethod.PUT,"/api/v1/lesson/{id}").hasAnyAuthority("ADMIN", "TEACHER", "STUDENT")
                 .antMatchers(HttpMethod.GET,"/api/v1/lesson").hasAnyAuthority("ADMIN", "TEACHER", "STUDENT")
-                .antMatchers(HttpMethod.POST,"/api/v1/lesson").hasAnyAuthority("ADMIN", "TEACHER")
+                .antMatchers(HttpMethod.POST,"/api/v1/lesson").hasAnyAuthority("ADMIN", "TEACHER", "STUDENT")
                 .antMatchers(HttpMethod.GET, "/api/v1/lesson/{id}").hasAnyAuthority("ADMIN", "TEACHER", "STUDENT")
-                .antMatchers(HttpMethod.DELETE, "/api/v1/lesson/{id}").hasAnyAuthority("ADMIN", "TEACHER")
+                .antMatchers(HttpMethod.DELETE, "/api/v1/lesson/{id}").hasAnyAuthority("ADMIN", "TEACHER", "STUDENT")
                 // FILE endpoints
-                .antMatchers("/api/v1/file/*").hasAnyAuthority("TEACHER", "ADMIN")
+                .antMatchers("/api/v1/file/*").hasAnyAuthority("ADMIN", "TEACHER", "STUDENT")
                 .and()
                 .sessionManagement().disable();
     }
