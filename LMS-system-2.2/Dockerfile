@@ -1,38 +1,20 @@
-FROM openjdk:11 as build
-
-# Set the current working directory inside the image
+# Используем базовый образ с Java 11 и Maven
+FROM maven:3.8.3-jdk-11-slim AS build
 WORKDIR /app
 
-# Copy maven executable to the image
-COPY mvnw .
-COPY .mvn .mvn
-RUN mvn -N io.takari:maven:wrapper
+# Копируем исходный код приложения
+COPY src /app/src
+COPY pom.xml /app
 
-# Copy the pom.xml file
-COPY pom.xml .
-
-# Build all the dependencies in preparation to go offline.
-# This is a separate step so the dependencies will be cached unless
-# the pom.xml file has changed.
-#RUN /opt/maven -N io.takari:maven:wrapper
-
-RUN mvn dependency:go-offline -B
-
-# Copy the project source
-COPY src src
-
-# Package the application
+# Загружаем зависимости и собираем приложение
 RUN mvn clean package -DskipTests
-RUN mkdir -p target/dependency && (cd target/dependency; jar -xf ../*.jar)
 
-#### Stage 2: A minimal docker image with command to run the app
-FROM openjdk:11-jre-alpine
+# Используем базовый образ с Java 11
+FROM openjdk:11-jre-slim
+WORKDIR /app
 
-ARG DEPENDENCY=/app/target/dependency
+# Копируем собранные файлы из предыдущего этапа
+COPY --from=build /app/target/LMS-system-2-0.0.1-SNAPSHOT.jar /app/app.jar
 
-# Copy project dependencies from the build stage
-COPY --from=build ${DEPENDENCY}/BOOT-INF/lib /app/lib
-COPY --from=build ${DEPENDENCY}/META-INF /app/META-INF
-COPY --from=build ${DEPENDENCY}/BOOT-INF/classes /app
-
-ENTRYPOINT ["java","-cp","app:app/lib/*","ru.itis.semwork.lmssystem2.Application"]
+# Запускаем приложение при запуске контейнера
+ENTRYPOINT ["java", "-jar", "app.jar"]
