@@ -1,1 +1,1 @@
-# pet-project
+# LMS system
