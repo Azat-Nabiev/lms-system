@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import ru.itis.semwork.lmssystem2.model.enums.UserRole;
 import ru.itis.semwork.lmssystem2.model.enums.UserState;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -49,6 +50,7 @@ public class User implements Serializable {
     @Enumerated(EnumType.STRING)
     private UserState state;
 
+    @Column(length = 2048)
     private String profilePhoto;
 
     private String tgAlias;
