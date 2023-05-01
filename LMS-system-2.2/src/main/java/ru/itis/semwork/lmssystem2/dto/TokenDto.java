@@ -15,4 +15,5 @@ public class TokenDto {
     private String login;
     private String name;
     private String telegramAlias;
+    private String role;
 }

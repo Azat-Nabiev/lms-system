@@ -72,6 +72,7 @@ public class UserServiceImpl implements UserService {
                            .login(user.getEmail())
                            .telegramAlias(user.getTgAlias())
                            .name(user.getFirstName())
+                           .role(user.getRole().toString())
                            .build();
         } else {
             throw new UsernameNotFoundException("Invalid username or password");
