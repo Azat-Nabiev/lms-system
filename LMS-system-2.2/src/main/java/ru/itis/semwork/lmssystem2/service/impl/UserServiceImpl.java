@@ -87,7 +87,7 @@ public class UserServiceImpl implements UserService {
                                   .orElseThrow(() -> new IllegalStateException("Cannot find the user"));
 
         user.setEmail(userForm.getEmail());
-        user.setPassword(passwordEncoder.encode(userForm.getPassword()));
+        user.setPassword(userForm.getPassword() != null ? passwordEncoder.encode(userForm.getPassword()) : null);
         user.setFirstName(userForm.getFirstName());
         user.setLastName(userForm.getLastName());
         user.setProfilePhoto(userForm.getProfilePhoto());
