@@ -33,7 +33,7 @@ public class UserServiceImpl implements UserService {
 
     private final UserMapper mapper;
 
-    private final  RedisUsersService redisUsersService;
+    private final RedisUsersService redisUsersService;
     private final PasswordEncoder passwordEncoder;
     private final LessonRepository lessonRepository;
 
@@ -56,7 +56,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public TokenDto login(UserForm userForm) {
         User user = userRepository.findByEmail(userForm.getEmail())
-                                   .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+                                  .orElseThrow(() -> new UsernameNotFoundException("User not found"));
         if (passwordEncoder.matches(userForm.getPassword(), user.getPassword())) {
             String token = JWT.create()
                               .withSubject(user.getId().toString())
@@ -67,7 +67,8 @@ public class UserServiceImpl implements UserService {
                               .sign(algorithm);
             redisUsersService.addTokenToUser(user, token);
             return TokenDto.builder()
-                        .id(user.getRedisId())
+                           .id(user.getRedisId())
+                           .userId(user.getId())
                            .token(token)
                            .login(user.getEmail())
                            .telegramAlias(user.getTgAlias())
@@ -83,7 +84,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public UserDto edit(Long id, UserForm userForm) {
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new IllegalStateException("Cannot find the user"));
+                                  .orElseThrow(() -> new IllegalStateException("Cannot find the user"));
 
         user.setEmail(userForm.getEmail());
         user.setPassword(userForm.getPassword());
@@ -103,7 +104,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public UserDto delete(Long id) {
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new IllegalStateException("Cannot find by id"));
+                                  .orElseThrow(() -> new IllegalStateException("Cannot find by id"));
 
         user.setState(UserState.ARCHIVED);
 
@@ -116,7 +117,7 @@ public class UserServiceImpl implements UserService {
     @Transactional(readOnly = true)
     public List<UserDto> getAll() {
         List<User> users = userRepository.findAllByState(UserState.ACTIVE)
-                .orElse(new ArrayList<>());
+                                         .orElse(new ArrayList<>());
 
         return mapper.mapUserDto(users);
     }
@@ -137,7 +138,7 @@ public class UserServiceImpl implements UserService {
                                   .orElseThrow(() -> new IllegalStateException("Cannot find user by id"));
 
         Lesson lesson = lessonRepository.findById(lessonId)
-                .orElseThrow(() -> new IllegalStateException("Cannot find user by id"));
+                                        .orElseThrow(() -> new IllegalStateException("Cannot find user by id"));
 
         List<Lesson> lessons = user.getLessons();
 
