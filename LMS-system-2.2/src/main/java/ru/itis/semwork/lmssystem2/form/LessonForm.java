@@ -1,5 +1,6 @@
 package ru.itis.semwork.lmssystem2.form;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,6 +24,7 @@ public class LessonForm {
     @NotNull
     private String description;
     @NotNull
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
     private LocalDateTime start;
     @NotNull
     private Long creatorId;

@@ -20,7 +20,7 @@ public class LessonDto {
     private Long id;
     private String name;
     private String description;
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss.SSS")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss.SSS")
     private LocalDateTime start;
     private Long creatorId;
 }

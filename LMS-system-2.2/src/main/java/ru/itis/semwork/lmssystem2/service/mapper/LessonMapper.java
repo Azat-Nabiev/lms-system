@@ -18,7 +18,7 @@ public class LessonMapper {
                      .name(lessonForm.getName())
                      .description(lessonForm.getDescription())
                      .creatorId(lessonForm.getCreatorId())
-                     .start(LocalDateTime.now())
+                     .start(lessonForm.getStart())
                      .state(LessonState.ACTIVE)
                      .build();
     }
