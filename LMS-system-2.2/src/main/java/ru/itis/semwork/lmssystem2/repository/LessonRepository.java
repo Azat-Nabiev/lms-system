@@ -13,4 +13,5 @@ public interface LessonRepository extends CrudRepository<Lesson, Long> {
     Optional<List<Lesson>> findAllByState(LessonState lessonState);
 
     Optional<Lesson> findByIdAndState(Long id, LessonState lessonState);
+    Optional<List<Lesson>> findAllByCreatorIdAndState(Long creatorId, LessonState lessonState);
 }

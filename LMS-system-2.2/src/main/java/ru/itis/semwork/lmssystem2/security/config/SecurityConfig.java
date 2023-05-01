@@ -48,6 +48,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.PUT,"/api/v1/lesson/{id}").hasAnyAuthority("ADMIN", "TEACHER", "STUDENT")
                 .antMatchers(HttpMethod.GET,"/api/v1/lesson").hasAnyAuthority("ADMIN", "TEACHER", "STUDENT")
                 .antMatchers(HttpMethod.POST,"/api/v1/lesson").hasAnyAuthority("ADMIN", "TEACHER", "STUDENT")
+                .antMatchers(HttpMethod.GET, "/api/v1/lesson/user/{user-id}").hasAnyAuthority("ADMIN", "TEACHER", "STUDENT")
                 .antMatchers(HttpMethod.GET, "/api/v1/lesson/{id}").hasAnyAuthority("ADMIN", "TEACHER", "STUDENT")
                 .antMatchers(HttpMethod.DELETE, "/api/v1/lesson/{id}").hasAnyAuthority("ADMIN", "TEACHER", "STUDENT")
                 // FILE endpoints

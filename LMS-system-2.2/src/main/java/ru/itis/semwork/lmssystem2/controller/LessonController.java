@@ -29,6 +29,13 @@ public class LessonController {
         return ResponseEntity.ok(lessonService.getById(id));
     }
 
+
+    @GetMapping("/user/{user-id}")
+    @Operation(summary = "Getting the ACTIVE lessons by USER ID")
+    public ResponseEntity<List<LessonDto>> findAllByUser(@PathVariable(name = "user-id") Long userId) {
+        return ResponseEntity.ok(lessonService.getAllByUserId(userId));
+    }
+
     @GetMapping
     @Operation(summary = "Getting all ACTIVE lessons")
     public ResponseEntity<List<LessonDto>> getAll() {

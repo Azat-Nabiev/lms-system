@@ -80,6 +80,13 @@ public class LessonServiceImpl implements LessonService {
         return mapper.mapToLessonDto(lesson);
     }
 
+    @Override
+    public List<LessonDto> getAllByUserId(Long userId) {
+        List<Lesson> lessons = lessonRepository.findAllByCreatorIdAndState(userId, LessonState.ACTIVE)
+                .orElse(new ArrayList<>());
+        return mapper.mapToLessonDto(lessons);
+    }
+
     private User validCreatorId(Long creatorId) {
         User user = userRepository.findById(creatorId)
                 .orElseThrow(() -> new IllegalStateException("User doesnt exist"));
