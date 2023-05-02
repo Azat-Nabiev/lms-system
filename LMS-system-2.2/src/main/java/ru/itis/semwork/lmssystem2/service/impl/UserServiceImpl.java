@@ -22,6 +22,7 @@ import ru.itis.semwork.lmssystem2.service.mapper.UserMapper;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -142,13 +143,15 @@ public class UserServiceImpl implements UserService {
 
         List<Lesson> lessons = user.getLessons();
 
-        if (lessons == null) {
-            lessons = new ArrayList<>();
+        if (!Objects.equals(lesson.getCreatorId(), userId)) {
+            if (lessons == null) {
+                lessons = new ArrayList<>();
+            }
+
+            lessons.add(lesson);
+
+            userRepository.save(user);
         }
-
-        lessons.add(lesson);
-
-        userRepository.save(user);
 
         return mapper.mapToUserDto(user);
     }
