@@ -11,6 +11,8 @@ import ru.itis.semwork.lmssystem2.dto.UserDto;
 import ru.itis.semwork.lmssystem2.form.UserForm;
 import ru.itis.semwork.lmssystem2.service.UserService;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/api/v1/reg")
 @RequiredArgsConstructor
@@ -21,7 +23,7 @@ public class RegisterController {
 
     @PostMapping
     @Operation(summary = "Adding the user")
-    public ResponseEntity<UserDto> add(@RequestBody UserForm userForm) {
+    public ResponseEntity<UserDto> add(@Valid @RequestBody UserForm userForm) {
         return ResponseEntity.ok(userService.register(userForm));
     }
 

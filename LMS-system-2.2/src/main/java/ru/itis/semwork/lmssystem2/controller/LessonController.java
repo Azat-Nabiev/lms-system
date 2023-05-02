@@ -15,6 +15,7 @@ import ru.itis.semwork.lmssystem2.dto.LessonDto;
 import ru.itis.semwork.lmssystem2.form.LessonForm;
 import ru.itis.semwork.lmssystem2.service.LessonService;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -44,14 +45,15 @@ public class LessonController {
 
     @PostMapping
     @Operation(summary = "Adding the lesson by TEACHER")
-    public ResponseEntity<LessonDto> add(@RequestBody LessonForm lessonForm) {
+    public ResponseEntity<LessonDto> add(@Valid @RequestBody LessonForm lessonForm) {
+
         return ResponseEntity.ok(lessonService.add(lessonForm));
     }
 
     @PutMapping("/{id}")
     @Operation(summary = "Editing the lesson by Id")
     public ResponseEntity<LessonDto> edit(@PathVariable(name = "id") Long id,
-                                          @RequestBody LessonForm lessonForm) {
+                                          @Valid @RequestBody LessonForm lessonForm) {
         return ResponseEntity.ok(lessonService.edit(id, lessonForm));
     }
 

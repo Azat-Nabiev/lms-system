@@ -31,7 +31,7 @@ public class FileMapper {
 
     public FileDto mapToFileDtoBytes(File file, ByteArrayOutputStream outputStream) {
         String fileFormat = null;
-        Pattern pattern = Pattern.compile("application/(.*)");
+        Pattern pattern = Pattern.compile("/([^/]+)$");
         Matcher matcher = pattern.matcher(file.getFormat());
         if (matcher.find()) {
             fileFormat = matcher.group(1);

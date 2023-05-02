@@ -8,8 +8,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import javax.validation.constraints.NotNull;
-import java.time.LocalDate;
+import javax.validation.constraints.Email;
 import java.time.LocalDateTime;
 
 
@@ -20,6 +19,7 @@ import java.time.LocalDateTime;
 @ToString
 @EqualsAndHashCode
 public class UserForm {
+    @Email
     private String email;
 
     private String password;

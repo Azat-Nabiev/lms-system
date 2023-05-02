@@ -60,10 +60,10 @@ public class LessonServiceImpl implements LessonService {
         Lesson lesson = lessonRepository.findById(id)
                                         .orElseThrow(() -> new IllegalStateException("Cannot find by id"));
 
-        if (lessonForm.getName() != null) {
+        if (lessonForm.getName() != null || !lessonForm.getName().isEmpty()) {
             lesson.setName(lessonForm.getName());
         }
-        if (lessonForm.getDescription() != null) {
+        if (lessonForm.getDescription() != null || !lessonForm.getDescription().isEmpty()) {
             lesson.setDescription(lessonForm.getDescription());
         }
         if (lessonForm.getStart() != null) {
