@@ -6,13 +6,13 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -26,6 +26,7 @@ public class FileController {
 
     private final FileService fileService;
 
+    @CrossOrigin(origins = "*", methods = {RequestMethod.GET})
     @GetMapping("/{id}")
     @Operation(summary = "Getting the files related to lesson")
     public ResponseEntity<?> getByLessonId(@PathVariable(name = "id") Long id) {
@@ -33,6 +34,7 @@ public class FileController {
         return ResponseEntity.ok(fileService.retrieveByLessonId(id));
     }
 
+    @CrossOrigin(origins = "*", methods = {RequestMethod.POST})
     @PostMapping(value = "/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @Operation(summary = "Adding the file at lesson")
     public ResponseEntity<FileDto> addToLesson(@PathVariable(name = "id") Long lessonId,
@@ -41,6 +43,7 @@ public class FileController {
         return ResponseEntity.ok(fileService.addToLesson(lessonId, file.getOriginalFilename(), file.getContentType(), file));
     }
 
+    @CrossOrigin(origins = "*", methods = {RequestMethod.DELETE})
     @DeleteMapping("/{id}")
     @Operation(summary = "Deleting the file")
     public ResponseEntity<FileDto> delete(@PathVariable(name = "id") Long id) {
