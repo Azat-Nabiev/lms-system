@@ -24,4 +24,5 @@ public interface UserService {
 
     UserDto removeFromLesson(Long userId, Long lessonId);
 
+    List<UserDto> findUsersByLessonId(Long lessonId);
 }

@@ -32,7 +32,7 @@ public class UserMapper {
                 .since(userForm.getSince()).build();
     }
 
-    public List<UserDto> mapUserDto(List<User> users) {
+    public List<UserDto> mapToUserDto(List<User> users) {
         return users.stream().map(this::mapToUserDto).collect(Collectors.toList());
     }
 

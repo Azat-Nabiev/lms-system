@@ -35,6 +35,12 @@ public class UserController {
         return ResponseEntity.ok(userService.getById(id));
     }
 
+    @GetMapping("/{id}")
+    @Operation(summary = "Getting users by lesson lesson id")
+    public ResponseEntity<List<UserDto>> findUsersByLessonId(@PathVariable(name = "id") Long id) {
+        return ResponseEntity.ok(userService.findUsersByLessonId(id));
+    }
+
     @PutMapping("/{id}")
     @Operation(summary = "Editing the user by id")
     public ResponseEntity<UserDto> edit(@PathVariable(name = "id") Long id,

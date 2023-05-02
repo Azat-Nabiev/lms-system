@@ -119,7 +119,7 @@ public class UserServiceImpl implements UserService {
         List<User> users = userRepository.findAllByState(UserState.ACTIVE)
                                          .orElse(new ArrayList<>());
 
-        return mapper.mapUserDto(users);
+        return mapper.mapToUserDto(users);
     }
 
     @Override
@@ -171,5 +171,15 @@ public class UserServiceImpl implements UserService {
 
         return mapper.mapToUserDto(user);
 
+    }
+
+    @Override
+    @Transactional
+    public List<UserDto> findUsersByLessonId(Long lessonId) {
+        Lesson lesson = lessonRepository.findById(lessonId)
+                                         .orElseThrow(() -> new IllegalStateException("Cannot find lesson by id"));
+        List<User> users = lesson.getUsers();
+
+        return mapper.mapToUserDto(users);
     }
 }
