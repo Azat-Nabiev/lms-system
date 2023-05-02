@@ -13,4 +13,7 @@ public interface FileService {
     FileDto delete(Long id);
 
     List<FileDto> retrieveByLessonId(Long lessonId);
+
+    FileDto retrieveByFileId(Long fileId);
+
 }

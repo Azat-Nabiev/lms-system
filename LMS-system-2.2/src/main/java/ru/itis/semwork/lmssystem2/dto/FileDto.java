@@ -7,6 +7,8 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.io.ByteArrayOutputStream;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -19,7 +21,7 @@ public class FileDto {
 
     private String name;
 
-    private byte[] file;
+    private ByteArrayOutputStream file;
 
     private String format;
 

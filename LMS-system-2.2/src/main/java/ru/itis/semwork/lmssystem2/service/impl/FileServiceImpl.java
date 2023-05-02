@@ -14,6 +14,8 @@ import ru.itis.semwork.lmssystem2.repository.LessonRepository;
 import ru.itis.semwork.lmssystem2.service.FileService;
 import ru.itis.semwork.lmssystem2.service.mapper.FileMapper;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,7 +33,7 @@ public class FileServiceImpl implements FileService {
         File file = fileMapper.mapToFile(multipartFile, fileName, contentType);
 
         Lesson lesson = lessonRepository.findByIdAndState(lessonId, LessonState.ACTIVE)
-                .orElseThrow(() -> new IllegalStateException("Cannot find the lesson by id"));
+                                        .orElseThrow(() -> new IllegalStateException("Cannot find the lesson by id"));
 
         List<File> files = lesson.getFiles();
 
@@ -53,7 +55,7 @@ public class FileServiceImpl implements FileService {
     public FileDto delete(Long id) {
 
         File file = fileRepository.findByIdAndState(id, FileState.ACTIVE)
-                .orElseThrow(() -> new IllegalStateException("Cannot find an ACTIVE file"));
+                                  .orElseThrow(() -> new IllegalStateException("Cannot find an ACTIVE file"));
 
         file.setState(FileState.ARCHIVED);
 
@@ -66,7 +68,22 @@ public class FileServiceImpl implements FileService {
     @Transactional(readOnly = true)
     public List<FileDto> retrieveByLessonId(Long lessonId) {
         List<File> files = fileRepository.findAllByLessonIdAndState(lessonId, FileState.ACTIVE)
-                .orElse(new ArrayList<>());
+                                         .orElse(new ArrayList<>());
         return fileMapper.mapToFileDto(files);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public FileDto retrieveByFileId(Long fileId) {
+        try {
+            File file = fileRepository.findByIdAndState(fileId, FileState.ACTIVE)
+                                      .orElseThrow(() -> new IllegalStateException("Cannot find an ACTIVE file"));
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+
+            outputStream.write(file.getFile());
+            return fileMapper.mapToFileDtoBytes(file, outputStream);
+        } catch (IOException ex) {
+            throw new IllegalArgumentException("Ошибка выгрузки");
+        }
     }
 }

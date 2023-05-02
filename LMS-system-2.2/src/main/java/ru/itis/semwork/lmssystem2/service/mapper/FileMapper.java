@@ -5,9 +5,12 @@ import org.springframework.web.multipart.MultipartFile;
 import ru.itis.semwork.lmssystem2.dto.FileDto;
 import ru.itis.semwork.lmssystem2.model.File;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 @Service
@@ -21,8 +24,23 @@ public class FileMapper {
         return FileDto.builder()
                       .id(file.getId())
                       .name(file.getName())
-                      .file(file.getFile())
                       .format(file.getFormat())
+                      .state(file.getState().toString())
+                      .build();
+    }
+
+    public FileDto mapToFileDtoBytes(File file, ByteArrayOutputStream outputStream) {
+        String fileFormat = null;
+        Pattern pattern = Pattern.compile("application/(.*)");
+        Matcher matcher = pattern.matcher(file.getFormat());
+        if (matcher.find()) {
+            fileFormat = matcher.group(1);
+        }
+        return FileDto.builder()
+                      .id(file.getId())
+                      .name(file.getName())
+                      .file(outputStream)
+                      .format(fileFormat)
                       .state(file.getState().toString())
                       .build();
     }
