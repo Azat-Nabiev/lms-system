@@ -45,7 +45,7 @@ public class LessonController {
 
     @PostMapping
     @Operation(summary = "Adding the lesson by TEACHER")
-    public ResponseEntity<LessonDto> add(@Valid @RequestBody LessonForm lessonForm) {
+    public ResponseEntity<LessonDto> add(@RequestBody LessonForm lessonForm) {
 
         return ResponseEntity.ok(lessonService.add(lessonForm));
     }
@@ -53,7 +53,7 @@ public class LessonController {
     @PutMapping("/{id}")
     @Operation(summary = "Editing the lesson by Id")
     public ResponseEntity<LessonDto> edit(@PathVariable(name = "id") Long id,
-                                          @Valid @RequestBody LessonForm lessonForm) {
+                                          @RequestBody LessonForm lessonForm) {
         return ResponseEntity.ok(lessonService.edit(id, lessonForm));
     }
 
