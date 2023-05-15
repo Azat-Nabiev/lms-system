@@ -27,7 +27,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
-
         http
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .addFilterAt(jwtLogoutFilter, LogoutFilter.class)
@@ -52,7 +51,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/api/v1/lesson/{id}").hasAnyAuthority("ADMIN", "TEACHER", "STUDENT")
                 .antMatchers(HttpMethod.DELETE, "/api/v1/lesson/{id}").hasAnyAuthority("ADMIN", "TEACHER", "STUDENT")
                 // FILE endpoints
-                .antMatchers("/api/v1/file/*").hasAnyAuthority("ADMIN", "TEACHER", "STUDENT")
+                .antMatchers("/api/v1/file/*").permitAll()
                 .and()
                 .sessionManagement().disable();
     }

@@ -22,14 +22,14 @@ Content-Type: application/json
 
 ### try to create a lesson by STUDENT
 
-POST http://localhost:8085/api/v1/lesson
-Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI1OSIsImNyZWF0ZWRBdCI6IjIwMjMtMDUtMTFUMTU6MDc6MDguNzQzOTg5Iiwicm9sZSI6IlRFQUNIRVIiLCJzdGF0ZSI6IkFDVElWRSIsImVtYWlsIjoidnVjZUBnbWFpbC5jb20ifQ.CjB61906LtHUDrdUJMCad2FHS2uONk1CAEJBU-e88Mk
+GET http://localhost:8085/api/v1/lesson
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiY3JlYXRlZEF0IjoiMjAyMy0wNS0xMVQxNTowNDozNS4xODE4MDEiLCJyb2xlIjoiVEVBQ0hFUiIsInN0YXRlIjoiQUNUSVZFIiwiZW1haWwiOiJhbGVrc2FAZ21haWwuY29tIn0.24y6xSH3FaQJHioligbYiKdYyb2Vc3CTKod3NXq_skY
 Content-Type: application/json
 
 {
   "name": "aleksa",
   "description": "aleksa",
-  "creatorId": 59
+  "creatorId": 1
 }
 
 

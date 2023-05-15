@@ -45,7 +45,7 @@ public class FileController {
     public ResponseEntity<?> getFileById(@PathVariable(name = "id") Long id) throws UnsupportedEncodingException {
 
         FileDto file = fileService.retrieveByFileId(id);
-        String fileName = String.format("%s.%s", file.getName(), file.getFormat());
+        String fileName = String.format("%s", file.getName());
 
         return ResponseEntity.ok()
                              .contentType(MediaType.APPLICATION_OCTET_STREAM)
